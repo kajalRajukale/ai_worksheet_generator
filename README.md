@@ -1,1 +1,1 @@
-# ai_worksheet_generator.
+# ai_worksheet_generator
