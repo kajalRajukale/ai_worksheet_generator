@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f2">
+  <meta name="description" content="Create, review, and print AI-assisted classroom worksheets.">
+  <title>Lessonleaf | AI Worksheet Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Lessonleaf home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>lessonleaf</span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#my-worksheets">My Worksheets</a>
+      <a href="#generator">Generator</a>
+      <a href="#how-it-works">How it works</a>
+    </nav>
+    <a class="header-action" href="#generator">Create worksheet <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> A little more time for teaching</p>
+        <h1 id="page-title">Make room for<br><em>the good lessons.</em></h1>
+        <p class="intro-text">Build a thoughtful, classroom-ready worksheet around the lesson you are teaching today.</p>
+      </div>
+      <aside class="intro-note" aria-label="Worksheet generator summary">
+        <div class="note-topline"><span>PREP, REIMAGINED</span><span class="note-spark" aria-hidden="true">✳</span></div>
+        <p>From a topic to a printable page, with your class in mind.</p>
+        <div class="note-rule"><span></span><span></span><span></span></div>
+      </aside>
+    </section>
+
+    <section class="library-section" id="my-worksheets" aria-labelledby="library-title">
+      <div class="library-heading">
+        <div>
+          <p class="eyebrow">YOUR TEACHING MATERIALS</p>
+          <h2 id="library-title">My Worksheets</h2>
+        </div>
+        <span class="library-count" id="worksheet-count">0 worksheets</span>
+      </div>
+      <div class="library-tools">
+        <label class="library-search">
+          <span class="visually-hidden">Search worksheets</span>
+          <input id="worksheet-search" type="search" maxlength="120" placeholder="Search by name, subject, class, or topic">
+        </label>
+        <a class="library-create" href="#generator">Create a worksheet <span aria-hidden="true">↗</span></a>
+      </div>
+      <ul class="worksheet-library" id="worksheet-library" aria-live="polite"></ul>
+      <p class="library-empty" id="library-empty">Your saved worksheets will appear here after you generate them.</p>
+      <p class="library-error" id="library-error" role="alert" hidden></p>
+    </section>
+
+    <section class="workspace" id="generator" aria-label="Worksheet builder">
+      <div class="builder-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / SET THE LESSON</p>
+            <h2>Worksheet details</h2>
+          </div>
+          <span class="step-mark" aria-hidden="true">01</span>
+        </div>
+
+        <form id="worksheet-form">
+          <div class="field-grid">
+            <label class="field">
+              <span>Subject</span>
+              <select name="subject" id="subject" required>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Science">Science</option>
+                <option value="English">English</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Social Studies">Social Studies</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Class / grade</span>
+              <input name="grade" id="grade" type="text" maxlength="40" placeholder="e.g. Grade 6" required>
+            </label>
+          </div>
+
+          <label class="field custom-subject-field" id="custom-subject-field" hidden>
+            <span>Custom subject</span>
+            <input name="other_subject" id="other-subject" type="text" maxlength="80" placeholder="Name the subject">
+          </label>
+
+          <label class="field">
+            <span>Topic</span>
+            <input name="topic" id="topic" type="text" maxlength="160" placeholder="e.g. Fractions and equivalent values" required>
+          </label>
+
+          <div class="field-grid compact-grid">
+            <fieldset class="field choice-field">
+              <legend>Difficulty</legend>
+              <div class="segmented-control">
+                <label><input type="radio" name="difficulty" value="Easy"><span>Easy</span></label>
+                <label><input type="radio" name="difficulty" value="Medium" checked><span>Medium</span></label>
+                <label><input type="radio" name="difficulty" value="Hard"><span>Hard</span></label>
+              </div>
+            </fieldset>
+            <label class="field count-field">
+              <span>Questions <small>1–20</small></span>
+              <input name="question_count" id="question-count" type="number" min="1" max="20" value="8" required>
+            </label>
+          </div>
+
+          <fieldset class="field type-field">
+            <legend>Question types <small>Choose one or more</small></legend>
+            <div class="type-grid">
+              <label class="type-option"><input type="checkbox" name="question_types" value="multiple_choice" checked><span>Multiple choice</span></label>
+              <label class="type-option"><input type="checkbox" name="question_types" value="fill_blanks"><span>Fill in the blanks</span></label>
+              <label class="type-option"><input type="checkbox" name="question_types" value="true_false"><span>True or false</span></label>
+              <label class="type-option"><input type="checkbox" name="question_types" value="short_answer"><span>Short answer</span></label>
+              <label class="type-option"><input type="checkbox" name="question_types" value="long_answer"><span>Long answer</span></label>
+              <label class="type-option"><input type="checkbox" name="question_types" value="match_following"><span>Match the following</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field-grid lower-grid">
+            <label class="field">
+              <span>Worksheet language</span>
+              <select name="language" id="language">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="mr">Marathi</option>
+              </select>
+            </label>
+            <label class="answer-toggle" for="answer-key">
+              <span class="toggle-copy"><strong>Answer key</strong><small>Include answers in preview</small></span>
+              <input type="checkbox" id="answer-key" name="include_answer_key" checked>
+              <span class="toggle-track" aria-hidden="true"></span>
+            </label>
+          </div>
+
+          <label class="field instructions-field">
+            <span>Extra instructions <small>Optional</small></span>
+            <textarea name="additional_instructions" id="additional-instructions" rows="3" maxlength="800" placeholder="Add a focus, format, or classroom context"></textarea>
+          </label>
+
+          <div class="form-footer">
+            <p>Review AI-generated content before sharing with students.</p>
+            <button class="primary-button" id="generate-button" type="submit">
+              <span class="button-label">Generate worksheet</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+        </form>
+      </div>
+
+      <section class="preview-panel" id="preview-panel" aria-labelledby="preview-title" aria-live="polite">
+        <div class="section-heading preview-heading">
+          <div>
+            <p class="eyebrow">02 / REVIEW & PRINT</p>
+            <h2 id="preview-title">Worksheet preview</h2>
+          </div>
+          <span class="preview-status" id="preview-status">READY WHEN YOU ARE</span>
+        </div>
+        <div class="empty-preview" id="empty-preview">
+          <div class="paper-illustration" aria-hidden="true">
+            <div class="paper-sheet"><span></span><span></span><span></span><i></i></div>
+            <div class="paper-pencil"></div>
+          </div>
+          <p class="empty-title">Your next worksheet<br>starts here.</p>
+          <span class="empty-meta">NO WORKSHEET YET</span>
+        </div>
+
+        <div class="worksheet-result" id="worksheet-result" hidden>
+          <div class="result-toolbar">
+            <span class="result-label" id="worksheet-save-status">SAVED WORKSHEET</span>
+            <div class="result-tools">
+              <button class="text-button" id="similar-worksheet" type="button">Create similar</button>
+              <button class="text-button" id="save-worksheet" type="button">Save changes</button>
+              <button class="text-button" id="new-worksheet" type="button">New worksheet <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <p class="form-error" id="save-error" role="alert" hidden></p>
+          <article class="print-sheet" id="print-sheet">
+            <div class="print-topline"><span>LESSONLEAF / CLASSROOM MATERIAL</span><span class="print-leaf" aria-hidden="true">✳</span></div>
+            <h3 id="worksheet-title" contenteditable="true" aria-label="Edit worksheet title"></h3>
+            <div class="student-details">
+              <label>Student <input id="student-name" type="text" maxlength="100"></label>
+              <span id="worksheet-grade"></span>
+              <span id="worksheet-date"></span>
+            </div>
+            <div class="worksheet-meta" id="worksheet-meta"></div>
+            <div class="print-instructions" id="print-instructions" hidden></div>
+            <ol class="question-list" id="question-list"></ol>
+            <button class="add-question-button" id="add-question" type="button">+ Add a question</button>
+            <section class="answer-key-preview" id="answer-key-preview" hidden>
+              <h4>Answer key</h4>
+              <ol id="answer-list"></ol>
+            </section>
+            <p class="accuracy-note">AI-generated answers may need review.</p>
+          </article>
+          <div class="download-actions">
+            <button class="download-button" id="student-pdf" type="button"><span aria-hidden="true">↓</span> Student PDF</button>
+            <button class="download-button teacher-download" id="teacher-pdf" type="button"><span aria-hidden="true">↓</span> Teacher PDF</button>
+          </div>
+          <p class="download-error" id="download-error" role="alert" hidden></p>
+        </div>
+      </section>
+    </section>
+
+    <section class="process-section" id="how-it-works">
+      <div class="process-heading">
+        <p class="eyebrow">A CALMER WAY TO PREP</p>
+        <h2>Three steps. One useful lesson.</h2>
+      </div>
+      <ol class="process-list">
+        <li><span>01</span><h3>Set the context</h3><p>Choose the class, topic, level, and question styles.</p></li>
+        <li><span>02</span><h3>Review the draft</h3><p>Read and edit the generated questions before printing.</p></li>
+        <li><span>03</span><h3>Take it to class</h3><p>Download a student copy or a version with answers.</p></li>
+      </ol>
+    </section>
+
+    <section class="about-strip" id="about">
+      <span class="about-mark" aria-hidden="true">L.</span>
+      <p>Made for teachers who want to spend less time formatting and more time with the lesson.</p>
+      <a href="#generator">Make a worksheet <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>lessonleaf</span></a>
+    <p>AI-assisted classroom materials. Always review before use.</p>
+    <span>© Lessonleaf</span>
+  </footer>
+</body>
+</html>
