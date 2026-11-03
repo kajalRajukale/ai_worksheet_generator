@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lessonleaf AI Worksheet Generator
 
 A beginner-friendly Flask application for drafting, editing, and printing classroom worksheets with Google's Gemini API.
@@ -94,3 +95,6 @@ flowchart LR
 The app is intended for local use and does not provide user accounts, access controls, cloud sync, analytics, or production hosting configuration. The worksheet library is stored on the local machine and is not encrypted. Before public deployment, add authentication and ownership checks, CSRF protection, rate limiting, production server configuration, stricter operational monitoring, and an explicit privacy policy. Do not deploy Flask's development server.
 
 Possible next enhancements include worksheet history, teacher accounts, answer-key review workflows, exports to DOCX, curriculum-aligned templates, and deployment after a security review.
+=======
+# ai_worksheet_generator
+>>>>>>> ae905db631eaddb45e5a366ba51a5d61f4af3cdb
